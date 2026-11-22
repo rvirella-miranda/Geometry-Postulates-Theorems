@@ -71,6 +71,7 @@ h2{font-family:var(--display);font-weight:400;color:var(--sage);font-size:clamp(
   background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:12px 12px}
 .fig .dg{max-height:230px}
 .tag{font-family:var(--label);font-weight:600;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-tx);text-align:center}
+.ver{text-align:center;font-family:var(--label);font-size:12px;color:var(--muted);margin-top:40px}
 .empty{text-align:center;font-style:italic;color:var(--muted);padding:30px 0}
 .dg text{font-family:"Poppins",system-ui,sans-serif}
 .dg .it{font-family:var(--serif)}
@@ -1339,6 +1340,7 @@ h2{font-family:var(--display);font-weight:400;color:var(--sage);font-size:clamp(
 <span class="tag">Triangle centers & more</span>
 </article></div>
 <p class="empty" id="empty" hidden>Nothing matches. Try a shorter word or clear the topic filter.</p>
+<p class="ver">Version 4 · updated Nov 22, 2026</p>
 </div>
 <script>
 (function(){
@@ -1349,11 +1351,10 @@ h2{font-family:var(--display);font-weight:400;color:var(--sage);font-size:clamp(
     const s=q.value.trim().toLowerCase(); let n=0, nP=0, nT=0;
     for(const c of cards){
       const ok=(kind==='all'||c.dataset.kind===kind)&&(!topics.size||topics.has(c.dataset.topic))&&(!s||c.dataset.s.includes(s));
-      c.hidden=!ok; if(ok){n++; c.dataset.kind==='P'?nP++:nT++;}
+      c.hidden=!ok; c.style.display=ok?'':'none'; if(ok){n++; c.dataset.kind==='P'?nP++:nT++;}
     }
-    document.getElementById('hp').hidden=!nP; document.getElementById('gp').hidden=!nP;
-    document.getElementById('ht').hidden=!nT; document.getElementById('gt').hidden=!nT;
-    document.getElementById('empty').hidden=n>0;
+    const show=(id,on)=>{const e=document.getElementById(id); e.hidden=!on; e.style.display=on?'':'none';};
+    show('hp',nP); show('gp',nP); show('ht',nT); show('gt',nT); show('empty',n===0);
     count.textContent=n+' of '+cards.length+' showing';
   }
   q.addEventListener('input',apply);
